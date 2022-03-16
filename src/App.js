@@ -14,6 +14,7 @@ import EcommercePage from "./components/EcommercePage";
 import Contact from "./components/Contact";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
+import SingleProductPage from "./components/SingleProductPage";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
@@ -165,6 +166,11 @@ class App extends Component {
             <Route exact path={["/products"]} component={EcommercePage} />
             <Route exact path={["/About Us"]} component={AboutPage} />
             <Route exact path={["/Contact"]} component={Contact} />
+            <Route
+              exact
+              path={["/SingleProductPage"]}
+              component={SingleProductPage}
+            />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
