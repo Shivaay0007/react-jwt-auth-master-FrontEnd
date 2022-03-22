@@ -1,36 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import AddToCart from "./AddToCart";
 import Axios from "axios";
-// import setCookie from "react-cookie";
-import { useCookies } from "react-cookie";
 
-// import { single_product_url as url } from "../utils/constants";
-// import { formatPrice } from "../utils/helpers";
-// import { PageHero } from "../components";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { withCookies, Cookies } from "react-cookie";
-import { instanceOf } from "prop-types";
+import Cookies from "js-cookie";
 
-const SingleProductPage = ({ contentSetter, cookies }) => {
-  const url = `http://localhost:8080/product/${contentSetter}`;
-
-  const ocookies = instanceOf(Cookies).isRequired;
-
-  const [ourcookie, setourCookie] = useCookies(["SingleProduct"]);
-  let productid;
-
-  function CookieSetter(productid) {
-    setourCookie("productid", productid);
-    console.log("productid cookie", productid);
-    // cookies.get(contentSetter);
-  }
-
-  function GetCookies() {
-    productid = cookies.get(productid);
-    console.log("productid cookie", productid);
-  }
+const SingleProductPage = ({ contentSetter, pId }) => {
+  const url = `http://localhost:8080/product/${pId}`;
 
   const [products, setproducts] = useState({
     loading: false,
@@ -39,16 +16,22 @@ const SingleProductPage = ({ contentSetter, cookies }) => {
   });
 
   useEffect(() => {
-    CookieSetter();
-    GetCookies();
-  });
+    // so that our pId do not get updated if page reloads
+    if (pId) {
+      Cookies.set("productid", pId);
+    }
+    console.log("productid ", Cookies.get("productid"));
+  }, []);
 
   useEffect(() => {
-    setproducts({
-      loading: false,
-      data: null,
-      error: false,
-    });
+    setproducts(
+      {
+        loading: false,
+        data: null,
+        error: false,
+      },
+      []
+    );
     Axios.get(url)
       .then((response) => {
         setproducts({
@@ -102,9 +85,7 @@ const SingleProductPage = ({ contentSetter, cookies }) => {
                       {content.company}
                     </p>
                     <hr />
-                    {content.stock > 0 && (
-                      <AddToCart product={content.product} />
-                    )}
+                    {content.stock > 0 && <AddToCart product={content.product} />}
                   </section>
                 </div>
               </div>
@@ -149,4 +130,4 @@ const Wrapper = styled.main`
   }
 `;
 
-export default withCookies(SingleProductPage);
+export default SingleProductPage;

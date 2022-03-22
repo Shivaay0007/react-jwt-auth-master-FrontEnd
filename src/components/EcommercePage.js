@@ -73,8 +73,8 @@ const EcommercePage = ({ GetSingleProductId }) => {
                     <div
                       className="div"
                       onClick={() => {
-                        GetSingleProductId(content);
-                        console.log("conntent", content);
+                        GetSingleProductId(content.id);
+                        console.log("conntent", content.id);
                       }}
                     >
                       <Link to={"/SingleProductPage"}>
@@ -82,12 +82,8 @@ const EcommercePage = ({ GetSingleProductId }) => {
                         <ImEye
                           size={30}
                           color="Lightgrey"
-                          onMouseOver={({ target }) =>
-                            (target.style.color = "blue")
-                          }
-                          onMouseOut={({ target }) =>
-                            (target.style.color = "Lightgrey")
-                          }
+                          onMouseOver={({ target }) => (target.style.color = "blue")}
+                          onMouseOut={({ target }) => (target.style.color = "Lightgrey")}
                         />
                       </Link>
 

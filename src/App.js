@@ -42,10 +42,10 @@ class App extends Component {
   }
 
   GetSingleProductId(pid) {
-    console.log("pid---", pid.id);
+    // console.log("pid---", pid);
 
     this.setState({
-      content: pid.id,
+      content: pid,
     });
   }
 
@@ -198,9 +198,11 @@ class App extends Component {
               component={<SingleProductPage data={content} />}
             /> */}
             <Route exact path={["/SingleProductPage"]}>
+              {/* {console.log("pId ", this.state.content)} */}
               <SingleProductPage
-                cookies={this.cookies}
-                contentSetter={this.state.content}
+                // cookies={this.cookies}
+                contentSetter={this.GetSingleProductId}
+                pId={this.state.content}
               />
             </Route>
             <Route exact path="/AddToCart" component={AddToCart} />
