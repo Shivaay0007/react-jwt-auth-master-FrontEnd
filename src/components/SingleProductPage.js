@@ -1,92 +1,116 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import AddToCart from "./AddToCart";
+import Axios from "axios";
+// import setCookie from "react-cookie";
+import { useCookies } from "react-cookie";
 
 // import { single_product_url as url } from "../utils/constants";
 // import { formatPrice } from "../utils/helpers";
-import {
-  Loading,
-  Error,
-  ProductImages,
-  AddToCart,
-  Stars,
-  PageHero,
-} from "../components";
+// import { PageHero } from "../components";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { withCookies, Cookies } from "react-cookie";
+import { instanceOf } from "prop-types";
 
-const SingleProductPage = () => {
-  const { id } = useParams();
-  //   const history = useHistory();
-  const {
-    single_product_loading: loading,
-    // single_product_error: error,
-    single_product: product,
-    fetchSingleProduct,
-  } = useState();
+const SingleProductPage = ({ contentSetter, cookies }) => {
+  const url = `http://localhost:8080/product/${contentSetter}`;
 
-  useEffect(() => {
-    // fetchSingleProduct(`${url}${id}`);
-    // eslint-disable-next-line
-  }, [id]); //can be just []
-  console.log(useParams());
+  const ocookies = instanceOf(Cookies).isRequired;
 
-  useEffect(() => {
-    // if (error) {
-    //   setTimeout(() => {
-    //     history.push("/");
-    //   }, 8081);
-    // }
-    // eslint-disable-next-line
+  const [ourcookie, setourCookie] = useCookies(["SingleProduct"]);
+  let productid;
+
+  function CookieSetter(productid) {
+    setourCookie("productid", productid);
+    console.log("productid cookie", productid);
+    // cookies.get(contentSetter);
+  }
+
+  function GetCookies() {
+    productid = cookies.get(productid);
+    console.log("productid cookie", productid);
+  }
+
+  const [products, setproducts] = useState({
+    loading: false,
+    data: null,
+    error: false,
   });
 
-  //   if (loading) {
-  //     return <Loading />;
-  //   }
-  //   if (error) {
-  //     return <Error />;
-  //   }
-  //   const {
-  //     name,
-  //     price,
-  //     description,
-  //     stock,
-  //     stars,
-  //     reviews,
-  //     id: sku,
-  //     company,
-  //     images,
-  //   } = product;
+  useEffect(() => {
+    CookieSetter();
+    GetCookies();
+  });
+
+  useEffect(() => {
+    setproducts({
+      loading: false,
+      data: null,
+      error: false,
+    });
+    Axios.get(url)
+      .then((response) => {
+        setproducts({
+          loading: false,
+          data: response.data,
+          error: false,
+        });
+      })
+      .catch(() => {
+        setproducts({
+          loading: false,
+          data: null,
+          error: false,
+        });
+      });
+  }, []);
+
+  let content = null;
+  if (products.error) {
+    content = <p>There was an error pls Refresh and try again letter...</p>;
+  }
   return (
     <Wrapper>
-      <PageHero title={product} />
-      <div className="section section-center page">
-        <Link to="/products" className="btn">
-          back to products
-        </Link>
-        <div className="product-center">
-          {/* <ProductImages images="" /> */}
-          <section className="content">
-            <h2></h2>
-            {/* <Stars stars={stars} reviews={reviews} /> */}
-            <h5 className="price"> </h5>
-            <p className="desc"> </p>
-            <p className="info">
-              <span>Available : </span>
-              {/* {stock > 0 ? "In stock" : "Out of stock"} */}
-            </p>
-            <p className="info">
-              <span>SKU : </span>
-              {/* {sku} */}
-            </p>
-            <p className="info">
-              <span>Brand : </span>
-              {/* {company} */}
-            </p>
-            <hr />
-            {/* {stock > 0 && <AddToCart product={product} />} */}
-          </section>
-        </div>
-      </div>
+      {/* <PageHero title={content.id} /> */}
+      {products?.data &&
+        products.data.map((content, key) => {
+          // console.log("products printed", content);
+          return (
+            <>
+              <div className="section section-center page">
+                <Link to="/products" className="btn">
+                  back to products
+                </Link>
+                <div className="product-center">
+                  <img src={content.image} />
+                  <section className="content">
+                    <h2>{content.name}</h2>
+                    {/* <Stars stars={stars} reviews={reviews} /> */}
+                    <h5 className="price"> {content.price}</h5>
+                    <p className="desc"> {content.description}</p>
+                    <p className="info">
+                      <span>Available : </span>
+                      {/* {content.stock > 0 ? "In stock" : "Out of stock"} */}
+                    </p>
+                    <p className="info">
+                      <span>SKU : </span>
+                      {content.sku}
+                    </p>
+                    <p className="info">
+                      <span>Brand : </span>
+                      {content.company}
+                    </p>
+                    <hr />
+                    {content.stock > 0 && (
+                      <AddToCart product={content.product} />
+                    )}
+                  </section>
+                </div>
+              </div>
+            </>
+          );
+        })}
     </Wrapper>
   );
 };
@@ -125,4 +149,4 @@ const Wrapper = styled.main`
   }
 `;
 
-export default SingleProductPage;
+export default withCookies(SingleProductPage);

@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { SiGnuprivacyguard } from "react-icons/si";
-import { FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { FaUserMinus, FaUserPlus, FaOpencart } from "react-icons/fa";
 import logo from "./assets/logo.svg";
 
 import AuthService from "./services/auth.service";
@@ -23,17 +23,30 @@ import BoardAdmin from "./components/board-admin.component";
 
 import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
+import AddToCart from "./components/AddToCart";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.logOut = this.logOut.bind(this);
+    this.GetSingleProductId = this.GetSingleProductId.bind(this);
+
+    const { cookies } = props;
 
     this.state = {
       showModeratorBoard: false,
       showAdminBoard: false,
-      currentUser: undefined,
+      currentUser: "",
+      content: "",
     };
+  }
+
+  GetSingleProductId(pid) {
+    console.log("pid---", pid.id);
+
+    this.setState({
+      content: pid.id,
+    });
   }
 
   componentDidMount() {
@@ -95,6 +108,12 @@ class App extends Component {
                 Contacts
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/AddToCart"} className="nav-link">
+                {/* Cart */}&nbsp;&nbsp;
+                <FaOpencart size={30} className="cart" />
+              </Link>
+            </li>
 
             {showModeratorBoard && (
               <li className="nav-item">
@@ -145,14 +164,14 @@ class App extends Component {
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
-                  {/* Login */}
+                  Login
                   <SiGnuprivacyguard />
                 </Link>
               </li>
 
               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
-                  {/* Sign Up */}
+                  Sign Up
                   <FaUserPlus />
                 </Link>
               </li>
@@ -163,14 +182,28 @@ class App extends Component {
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
-            <Route exact path={["/products"]} component={EcommercePage} />
+            {/* <Route
+              exact
+              path={["/products"]}
+              component={<EcommercePage contentSetter={content} />}
+            /> */}
+            <Route exact path={["/products"]}>
+              <EcommercePage GetSingleProductId={this.GetSingleProductId} />
+            </Route>
             <Route exact path={["/About Us"]} component={AboutPage} />
             <Route exact path={["/Contact"]} component={Contact} />
-            <Route
+            {/* <Route
               exact
               path={["/SingleProductPage"]}
-              component={SingleProductPage}
-            />
+              component={<SingleProductPage data={content} />}
+            /> */}
+            <Route exact path={["/SingleProductPage"]}>
+              <SingleProductPage
+                cookies={this.cookies}
+                contentSetter={this.state.content}
+              />
+            </Route>
+            <Route exact path="/AddToCart" component={AddToCart} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
