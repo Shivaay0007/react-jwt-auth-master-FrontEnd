@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FaCheck } from "react-icons/fa";
+// import { FaCheck } from "react-icons/fa";
 // import AmountButtons from "./AmountButtons";
 
 const AddToCart = ({ product }) => {
   // console.log("AddToCart");
-  const { addToCart } = useState();
+  // const { addToCart } = useState();
   // const { id, stock, colors } = product;
 
   // const [mainColor, setMainColor] = useState(colors[0]);

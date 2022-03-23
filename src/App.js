@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -31,7 +31,7 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
     this.GetSingleProductId = this.GetSingleProductId.bind(this);
 
-    const { cookies } = props;
+    // const { cookies } = props;
 
     this.state = {
       showModeratorBoard: false,

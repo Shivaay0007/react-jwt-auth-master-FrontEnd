@@ -82,11 +82,14 @@ const EcommercePage = ({ GetSingleProductId }) => {
                         <ImEye
                           size={30}
                           color="Lightgrey"
-                          onMouseOver={({ target }) => (target.style.color = "blue")}
-                          onMouseOut={({ target }) => (target.style.color = "Lightgrey")}
+                          onMouseOver={({ target }) =>
+                            (target.style.color = "blue")
+                          }
+                          onMouseOut={({ target }) =>
+                            (target.style.color = "Lightgrey")
+                          }
                         />
                       </Link>
-
                       <Link to={"/AddTOCart"}>
                         <FaOpencart size={40} className="cart" />
                       </Link>
