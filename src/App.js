@@ -10,7 +10,7 @@ import AuthService from "./services/auth.service";
 
 import AboutPage from "./components/AboutPage";
 import EcommercePage from "./components/EcommercePage";
-// import { Products } from "./pages";
+import { Products } from "./pages";
 import Contact from "./components/Contact";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
@@ -93,27 +93,6 @@ class App extends Component {
                 Home
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to={"/products"} className="nav-link">
-                Products
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/About Us"} className="nav-link">
-                About Us
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/Contact"} className="nav-link">
-                Contacts
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/AddToCart"} className="nav-link">
-                {/* Cart */}&nbsp;&nbsp;
-                <FaOpencart size={30} className="cart" />
-              </Link>
-            </li>
 
             {showModeratorBoard && (
               <li className="nav-item">
@@ -138,8 +117,29 @@ class App extends Component {
                 </Link>
               </li>
             )}
+            <li className="nav-item">
+              <Link to={"/products"} className="nav-link">
+                Products
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/About Us"} className="nav-link">
+                About Us
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/Contact"} className="nav-link">
+                Contacts
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/AddToCart"} className="nav-link">
+                {/* Cart */}&nbsp;&nbsp;
+                <FaOpencart size={30} className="cart" />
+              </Link>
+            </li>
           </div>
-
+          {console.log("current user", currentUser)}
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
@@ -149,12 +149,7 @@ class App extends Component {
               </li>
 
               <li className="nav-item">
-                <a
-                  href
-                  to="/login"
-                  className="nav-link"
-                  onClick={this.logOut({ returnTo: window.location.origin })}
-                >
+                <a href to="/login" className="nav-link" onClick={this.logOut}>
                   LogOut
                   <FaUserMinus />
                 </a>

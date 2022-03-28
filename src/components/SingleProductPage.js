@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import AddToCart from "./AddToCart";
+import AddToCart from "./AddToCart";
 import Axios from "axios";
 
 import styled from "styled-components";
@@ -85,10 +85,14 @@ const SingleProductPage = ({ contentSetter, pId }) => {
                   {products.data[0].company}
                 </p>
                 <hr />
-                <Link to="/products" className="btn">
-                  Add TO Cart
-                </Link>
-                {/* {content.stock > 0 && <AddToCart product={content.product} />} */}
+                <div>
+                  <Link to="/AddToCart" className="btn">
+                    Add TO Cart
+                  </Link>
+                  {
+                    // {<AddToCart product={products.data[0].product} />}
+                  }
+                </div>
               </section>
             </div>
           </div>

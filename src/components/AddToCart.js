@@ -1,49 +1,88 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import Axios from "axios";
+import AuthService from "../services/auth.service";
+import userService from "../services/user.service";
+
 // import { FaCheck } from "react-icons/fa";
 // import AmountButtons from "./AmountButtons";
 
-const AddToCart = ({ product }) => {
-  // console.log("AddToCart");
-  // const { addToCart } = useState();
-  // const { id, stock, colors } = product;
+const AddToCart = ({ pId }) => {
+  const LocalStorage = JSON.parse(localStorage.getItem("user"));
 
-  // const [mainColor, setMainColor] = useState(colors[0]);
-  // const [amount, setAmount] = useState(1);
+  const url = `http://localhost:8080/cart/${LocalStorage?.id}`;
 
-  // const increase = () => {
-  //   setAmount((oldAmount) => {
-  //     let tempAmount = oldAmount + 1;
-  //     if (tempAmount > stock) {
-  //       tempAmount = stock;
-  //     }
-  //     return tempAmount;
-  //   });
-  // };
+  //   const currentUser = AuthService.getCurrentUser();
+  const [products, setproducts] = useState({
+    loading: false,
+    data: [],
+    error: false,
+  });
 
-  // const decrease = () => {
-  //   setAmount((oldAmount) => {
-  //     let tempAmount = oldAmount - 1;
-  //     if (tempAmount < 1) {
-  //       tempAmount = 1;
-  //     }
-  //     return tempAmount;
-  //   });
-  // };
+  //   const LocalStorage = localStorage.getItem("user");
 
+  useEffect(() => {
+    // so that our pId do not get updated if page reloads
+    if (pId) {
+      Cookies.set("productid", pId);
+      //   console.log("pid is generated", pId);
+    }
+  }, []);
+
+  useEffect(() => {
+    setproducts(
+      {
+        loading: false,
+        data: null,
+        error: false,
+      },
+      []
+    );
+    if (pId || Cookies.get("productid")) {
+      Axios.post(
+        url,
+        { data: {} },
+        {
+          headers: {
+            "x-access-token": LocalStorage?.accessToken,
+          },
+        }
+      )
+        .then((response) => {
+          setproducts((preState) => ({
+            ...preState,
+
+            data: response.data,
+          }));
+          console.log("access token", LocalStorage?.accessToken);
+        })
+        .catch(() => {
+          setproducts({
+            loading: false,
+            data: null,
+            error: false,
+          });
+        });
+    }
+  }, []);
+
+  let content = null;
+  if (products.error) {
+    content = <p>There was an error pls Refresh and try again letter...</p>;
+  }
   return (
     <Wrapper>
-      <Link to="/products" className="btn">
+      {/* <Link to="/products" className="btn">
         back to products
-      </Link>
-      <br />
-      <br />
+      </Link> */}
+
       <div className="colors">
         <span> colors : </span>
         <div className="">
           {/* {colors.map((color, index) => { */}
-          return (
+          {/* return ( */}
           <button
           // key={index}
           // style={{ backgroundColor: color }}
@@ -55,7 +94,7 @@ const AddToCart = ({ product }) => {
             Product Will Shown here
             {/* {mainColor === color ? <FaCheck /> : null} */}
           </button>
-          );
+          {/* ); */}
           {/* })} */}
         </div>
       </div>
@@ -70,7 +109,7 @@ const AddToCart = ({ product }) => {
           className="btn"
           // onClick={() => addToCart(id, mainColor, amount, product)}
         >
-          add to cart
+          CheckOut
         </Link>
       </div>
     </Wrapper>
