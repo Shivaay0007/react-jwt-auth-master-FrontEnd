@@ -139,23 +139,34 @@ class App extends Component {
               </Link>
             </li>
           </div>
-          {console.log("current user", currentUser)}
+          {/* {console.log("current user", currentUser)} */}
+          {/* <div className="navbar-nav ml-auto"> */}
           {currentUser ? (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/profile"} className="nav-link">
-                  {currentUser.username}
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <a href to="/login" className="nav-link" onClick={this.logOut}>
-                  LogOut
-                  <FaUserMinus />
-                </a>
-              </li>
+            <div className="dropdown">
+              <div>
+                <button className="dropbtn">My Account</button>
+                {/* <li className="nav-item"> */}
+                <div className="dropdown-content">
+                  <div className="child">
+                    <Link to={"/profile"} className="nav-link">
+                      {currentUser.username}
+                    </Link>
+                    <Link
+                      to={"/login"}
+                      className="nav-link"
+                      onClick={this.logOut}
+                    >
+                      LogOut
+                      <FaUserMinus />
+                    </Link>
+                  </div>
+                  {/* </li> */}
+                </div>
+              </div>
             </div>
           ) : (
+            // </div>
+
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
@@ -184,6 +195,9 @@ class App extends Component {
             /> */}
             <Route exact path={["/products"]}>
               <EcommercePage GetSingleProductId={this.GetSingleProductId} />
+            </Route>
+            <Route exact path={["/products/:id"]}>
+              <>hello there</>
             </Route>
             <Route exact path={["/About Us"]} component={AboutPage} />
             <Route exact path={["/Contact"]} component={Contact} />

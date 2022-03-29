@@ -12,7 +12,7 @@ import userService from "../services/user.service";
 const AddToCart = ({ pId }) => {
   const LocalStorage = JSON.parse(localStorage.getItem("user"));
 
-  const url = `http://localhost:8080/cart/${LocalStorage?.id}`;
+  const url = `http://localhost:8080/cart/${(LocalStorage?.id, pId)}`;
 
   //   const currentUser = AuthService.getCurrentUser();
   const [products, setproducts] = useState({
@@ -56,7 +56,7 @@ const AddToCart = ({ pId }) => {
 
             data: response.data,
           }));
-          console.log("access token", LocalStorage?.accessToken);
+          // console.log("access token", LocalStorage?.accessToken);
         })
         .catch(() => {
           setproducts({
@@ -77,25 +77,31 @@ const AddToCart = ({ pId }) => {
       {/* <Link to="/products" className="btn">
         back to products
       </Link> */}
-
-      <div className="colors">
-        <span> colors : </span>
-        <div className="">
-          {/* {colors.map((color, index) => { */}
-          {/* return ( */}
-          <button
-          // key={index}
-          // style={{ backgroundColor: color }}
-          // className={`${
-          //   mainColor === color ? "color-btn active" : "color-btn"
-          // }`}
-          // onClick={() => setMainColor(color)}
-          >
-            Product Will Shown here
-            {/* {mainColor === color ? <FaCheck /> : null} */}
-          </button>
-          {/* ); */}
-          {/* })} */}
+      <div className="card">
+        <img
+          src={products?.data?.image}
+          alt="Image is not available at this time"
+        />
+        <br />
+        <div className="colors">
+          <span> colors : </span>
+          <div className="">
+            {/* {colors.map((color, index) => { */}
+            {/* return ( */}
+            <button
+            // key={index}
+            // style={{ backgroundColor: color }}
+            // className={`${
+            //   mainColor === color ? "color-btn active" : "color-btn"
+            // }`}
+            // onClick={() => setMainColor(color)}
+            >
+              Product Will Shown here
+              {/* {mainColor === color ? <FaCheck /> : null} */}
+            </button>
+            {/* ); */}
+            {/* })} */}
+          </div>
         </div>
       </div>
       <div className="btn-container">
@@ -117,6 +123,8 @@ const AddToCart = ({ pId }) => {
 };
 
 const Wrapper = styled.section`
+  .card {
+  }
   margin-top: 2rem;
   .colors {
     display: grid;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FaOpencart } from "react-icons/fa";
 import { RiHeart3Fill } from "react-icons/ri";
 import { ImEye } from "react-icons/im";
-
+import { formatPrice } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 const EcommercePage = ({ GetSingleProductId }) => {
@@ -65,7 +65,7 @@ const EcommercePage = ({ GetSingleProductId }) => {
                     {/* <br /> */}
                     {/* Company : {content.company}
                     <br /> */}
-                    Price : {content.price}
+                    Price : {formatPrice(content.price)}
                     <br />
                     Category : {content.category}
                     <br />

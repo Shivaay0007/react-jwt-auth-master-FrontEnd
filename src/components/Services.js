@@ -46,14 +46,14 @@ const Wrapper = styled.section`
     margin-bottom: 2rem;
   }
   p {
-    margin-bottom: 0;
+    margin-bottom: 2;
     line-height: 1.8;
     color: var(--clr-primary-3);
   }
   .services-center {
     margin-top: 4rem;
     display: grid;
-    gap: 2.5rem;
+    gap: 2rem;
   }
   .service {
     background: var(--clr-primary-7);
@@ -68,7 +68,7 @@ const Wrapper = styled.section`
     width: 4rem;
     height: 4rem;
     display: grid;
-    margin: 0 auto;
+    margin: 20px auto;
     place-items: center;
     margin-bottom: 1rem;
     border-radius: 50%;

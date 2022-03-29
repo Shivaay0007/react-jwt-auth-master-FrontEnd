@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import AddToCart from "./AddToCart";
+// import AddToCart from "./AddToCart";
 import Axios from "axios";
+import { formatPrice } from "../utils/helpers";
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -70,7 +71,7 @@ const SingleProductPage = ({ contentSetter, pId }) => {
               <section className="content">
                 <h2>{products.data[0].name}</h2>
                 {/* <Stars stars={stars} reviews={reviews} /> */}
-                <h5 className="price"> {products.data[0].price}</h5>
+                <h5 className="price">{formatPrice(products.data[0].price)}</h5>
                 <p className="desc"> {products.data[0].description}</p>
                 <p className="info">
                   <span>Available : </span>
