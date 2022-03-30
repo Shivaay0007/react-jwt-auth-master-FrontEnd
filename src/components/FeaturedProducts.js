@@ -54,7 +54,7 @@ const FeaturedProducts = () => {
         <div className="underline"></div>
       </div>
       <div className="section-center featured">
-        {products?.data?.slice(7, 10).map((product) => {
+        {products?.data?.slice(6, 10).map((product) => {
           return <Product key={product.id} {...product} />;
           // return <h4>Our products...</h4>;
         })}
@@ -69,7 +69,8 @@ const FeaturedProducts = () => {
 const Wrapper = styled.section`
   background: var(--clr-grey-10);
   .featured {
-    margin: 4rem -2.75rem;
+    margin: 0.5rem -2.75rem;
+    padding: 100px;
     display: grid;
     gap: 2.5rem;
     img {

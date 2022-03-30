@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import AddToCart from "./AddToCart";
+import AddToCart from "./AddToCart";
 import Axios from "axios";
 import { formatPrice } from "../utils/helpers";
 
@@ -17,6 +17,22 @@ const SingleProductPage = ({ contentSetter, pId }) => {
     data: [],
     error: false,
   });
+  let CartProducts = () => {
+    const LocalStorageCart = localStorage.getItem("Cart");
+    if (LocalStorageCart) {
+      const newParsedLOcalstorage = JSON.parse(LocalStorageCart);
+
+      console.log("LocalStorageCart", products.data[0]);
+      const someArray = [...newParsedLOcalstorage, products.data[0]];
+
+      console.log("console for set locol storage", newParsedLOcalstorage);
+      if (products.data) {
+        localStorage.setItem("Cart", JSON.stringify(someArray));
+      }
+    } else {
+      localStorage.setItem("Cart", JSON.stringify(products.data[0]));
+    }
+  };
 
   useEffect(() => {
     // so that our pId do not get updated if page reloads
@@ -87,12 +103,11 @@ const SingleProductPage = ({ contentSetter, pId }) => {
                 </p>
                 <hr />
                 <div>
-                  <Link to="/AddToCart" className="btn">
+                  <Link to="/AddToCart" className="btn" onClick={CartProducts}>
+                    {console.log("producr.data", products.data)}
                     Add TO Cart
                   </Link>
-                  {
-                    // {<AddToCart product={products.data[0].product} />}
-                  }
+                  {/* <AddToCart product={products.data[0].product} /> */}
                 </div>
               </section>
             </div>

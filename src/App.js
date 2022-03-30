@@ -85,7 +85,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand ">
           <Link to={"/"} className="navbar-brand">
-            <img src={logo} alt="" width="195px" margin-left="-25px" />
+            <img src={logo} alt="" width="215px" margin-left="-25px" />
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">

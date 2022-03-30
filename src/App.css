@@ -181,7 +181,7 @@ label {
   max-width: var(--max-width);
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: auto) {
   .section-center {
     width: 95vw;
   }
@@ -252,6 +252,7 @@ label {
   padding: 5px;
   font-size: 16px;
   border-radius: 12px;
+  border-color: transparent;
 }
 
 .dropdown {

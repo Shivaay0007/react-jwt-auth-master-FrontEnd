@@ -38,7 +38,7 @@ const Wrapper = styled.section`
   h4 {
     color: var(--clr-primary-1);
   }
-  padding: 5rem 0;
+  padding: -5rem 0;
 
   background: var(--clr-primary-10);
 
@@ -58,7 +58,7 @@ const Wrapper = styled.section`
   .service {
     background: var(--clr-primary-7);
     text-align: center;
-    padding: 2.5rem 2rem;
+    padding: 1.5rem 1rem;
     border-radius: var(--radius);
     p {
       color: var(--clr-primary-2);

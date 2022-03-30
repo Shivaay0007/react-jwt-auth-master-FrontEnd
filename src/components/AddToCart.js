@@ -3,16 +3,17 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import Axios from "axios";
-import AuthService from "../services/auth.service";
-import userService from "../services/user.service";
+// import AuthService from "../services/auth.service";
+// import userService from "../services/user.service";
 
 // import { FaCheck } from "react-icons/fa";
 // import AmountButtons from "./AmountButtons";
 
 const AddToCart = ({ pId }) => {
   const LocalStorage = JSON.parse(localStorage.getItem("user"));
+  const LocalStorageCart = localStorage.getItem("Cart");
 
-  const url = `http://localhost:8080/cart/${(LocalStorage?.id, pId)}`;
+  const url = `http://localhost:8080/cart/${LocalStorage?.id}`;
 
   //   const currentUser = AuthService.getCurrentUser();
   const [products, setproducts] = useState({
@@ -77,33 +78,19 @@ const AddToCart = ({ pId }) => {
       {/* <Link to="/products" className="btn">
         back to products
       </Link> */}
-      <div className="card">
-        <img
-          src={products?.data?.image}
-          alt="Image is not available at this time"
-        />
-        <br />
-        <div className="colors">
-          <span> colors : </span>
-          <div className="">
-            {/* {colors.map((color, index) => { */}
-            {/* return ( */}
-            <button
-            // key={index}
-            // style={{ backgroundColor: color }}
-            // className={`${
-            //   mainColor === color ? "color-btn active" : "color-btn"
-            // }`}
-            // onClick={() => setMainColor(color)}
-            >
-              Product Will Shown here
-              {/* {mainColor === color ? <FaCheck /> : null} */}
-            </button>
-            {/* ); */}
-            {/* })} */}
+      {
+        <div className="card">
+          <img
+            src={LocalStorageCart?.image}
+            alt="Image is not available at this time"
+          />
+          <br />
+          <div className="colors">
+            <span> Name : {LocalStorageCart?.name}</span>
+            <span> price : {LocalStorageCart?.price}</span>
           </div>
         </div>
-      </div>
+      }
       <div className="btn-container">
         {/* <AmountButtons
           amount={amount}
