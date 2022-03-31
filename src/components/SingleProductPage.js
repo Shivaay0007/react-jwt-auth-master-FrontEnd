@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import AddToCart from "./AddToCart";
 import Axios from "axios";
-import { formatPrice } from "../utils/helpers";
+import {formatPrice} from "../utils/helpers";
 
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Cookies from "js-cookie";
 
-const SingleProductPage = ({ contentSetter, pId }) => {
-  const url = `http://localhost:8080/product/${
-    pId || Cookies.get("productid")
-  }`;
+const SingleProductPage = ({contentSetter, pId}) => {
+  const url = `http://localhost:8080/product/${ pId || Cookies.get("productid")
+    }`;
 
   const [products, setproducts] = useState({
     loading: false,
@@ -18,20 +17,27 @@ const SingleProductPage = ({ contentSetter, pId }) => {
     error: false,
   });
   let CartProducts = () => {
-    const LocalStorageCart = localStorage.getItem("Cart");
-    if (LocalStorageCart) {
-      const newParsedLOcalstorage = JSON.parse(LocalStorageCart);
+    let LocalStorageCart = [];
 
-      console.log("LocalStorageCart", products.data[0]);
-      const someArray = [...newParsedLOcalstorage, products.data[0]];
+    LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
+    LocalStorageCart.push(products.data[0]);
+    localStorage.setItem('Cart', JSON.stringify(LocalStorageCart));
 
-      console.log("console for set locol storage", newParsedLOcalstorage);
-      if (products.data) {
-        localStorage.setItem("Cart", JSON.stringify(someArray));
-      }
-    } else {
-      localStorage.setItem("Cart", JSON.stringify(products.data[0]));
-    }
+    // if (LocalStorageCart) {
+    //   const newParsedLOcalstorage = JSON.parse(LocalStorageCart);
+
+    //   const someArray = [...newParsedLOcalstorage, products.data[0]];
+    //   console.log("LocalStorageCart", products.data[0], newParsedLOcalstorage, someArray);
+
+    //   if (products.data) {
+    //     localStorage.setItem("Cart", JSON.stringify(someArray));
+    //   }
+    // } else {
+    //   localStorage.setItem("Cart", JSON.stringify(products.data[0]));
+    // }
+
+
+
   };
 
   useEffect(() => {
