@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import AddToCart from "./AddToCart";
 import Axios from "axios";
-import {formatPrice} from "../utils/helpers";
+import { formatPrice } from "../utils/helpers";
 
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const SingleProductPage = ({contentSetter, pId}) => {
-  const url = `http://localhost:8080/product/${ pId || Cookies.get("productid")
-    }`;
+const SingleProductPage = ({ contentSetter, pId }) => {
+  const url = `http://localhost:8080/product/${
+    pId || Cookies.get("productid")
+  }`;
 
   const [products, setproducts] = useState({
     loading: false,
@@ -21,7 +22,7 @@ const SingleProductPage = ({contentSetter, pId}) => {
 
     LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
     LocalStorageCart.push(products.data[0]);
-    localStorage.setItem('Cart', JSON.stringify(LocalStorageCart));
+    localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
 
     // if (LocalStorageCart) {
     //   const newParsedLOcalstorage = JSON.parse(LocalStorageCart);
@@ -35,9 +36,6 @@ const SingleProductPage = ({contentSetter, pId}) => {
     // } else {
     //   localStorage.setItem("Cart", JSON.stringify(products.data[0]));
     // }
-
-
-
   };
 
   useEffect(() => {

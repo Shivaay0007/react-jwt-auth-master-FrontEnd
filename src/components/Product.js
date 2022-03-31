@@ -48,7 +48,7 @@ const Wrapper = styled.article`
     height: 2.5rem;
     border-radius: 50%;
     transition: var(--transition);
-    opacity: 0;
+    opacity: 0.2;
     cursor: pointer;
     svg {
       font-size: 1.25rem;

@@ -9,9 +9,9 @@ import Axios from "axios";
 // import { FaCheck } from "react-icons/fa";
 // import AmountButtons from "./AmountButtons";
 
-const AddToCart = ({ pId }) => {
+const AddToCart = ({ CartProducts, pId }) => {
   const LocalStorage = JSON.parse(localStorage.getItem("user"));
-  const LocalStorageCart = localStorage.getItem("Cart");
+  // const LocalStorageCart = localStorage.getItem("Cart");
 
   const url = `http://localhost:8080/cart/${LocalStorage?.id}`;
 
@@ -81,13 +81,13 @@ const AddToCart = ({ pId }) => {
       {
         <div className="card">
           <img
-            src={LocalStorageCart?.image}
+            src={CartProducts?.image}
             alt="Image is not available at this time"
           />
           <br />
           <div className="colors">
-            <span> Name : {LocalStorageCart?.name}</span>
-            <span> price : {LocalStorageCart?.price}</span>
+            <span> Name : {CartProducts?.name}</span>
+            <span> price : {CartProducts?.price}</span>
           </div>
         </div>
       }

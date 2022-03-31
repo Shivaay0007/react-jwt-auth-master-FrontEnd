@@ -69,7 +69,7 @@ const FeaturedProducts = () => {
 const Wrapper = styled.section`
   background: var(--clr-grey-10);
   .featured {
-    margin: 0.5rem -2.75rem;
+    margin: -3rem -2.75rem;
     padding: 100px;
     display: grid;
     gap: 2.5rem;
