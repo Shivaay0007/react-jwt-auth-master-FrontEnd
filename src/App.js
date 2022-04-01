@@ -211,10 +211,13 @@ class App extends Component {
               <SingleProductPage
                 // cookies={this.cookies}
                 contentSetter={this.GetSingleProductId}
+                CartProducts={"CartProducts"}
                 pId={this.state.content}
               />
             </Route>
-            <Route exact path="/AddToCart" component={AddToCart} />
+            <Route exact path={["/AddToCart"]}>
+              <AddToCart Product={"CartProducts"} />
+            </Route>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />

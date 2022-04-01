@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Cart from "./Cart";
 
 // https://formspree.io/
 const Contact = () => {
@@ -27,7 +26,6 @@ const Contact = () => {
           </div>
         </div>
       </Wrapper>
-      <Cart />
     </div>
   );
 };

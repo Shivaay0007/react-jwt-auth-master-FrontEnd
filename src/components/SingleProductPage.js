@@ -107,8 +107,14 @@ const SingleProductPage = ({ contentSetter, pId }) => {
                 </p>
                 <hr />
                 <div>
-                  <Link to="/AddToCart" className="btn" onClick={CartProducts}>
-                    {console.log("producr.data", products.data)}
+                  <Link
+                    to="/AddToCart"
+                    className="btn"
+                    onClick={() => {
+                      CartProducts(products.data[0]);
+                    }}
+                  >
+                    {/* {console.log("producr.data", products.data)} */}
                     Add TO Cart
                   </Link>
                   {/* <AddToCart product={products.data[0].product} /> */}
