@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { links } from "../utils/constants";
 import { useState } from "react";
+import { MDBAnimation } from "mdbreact";
 
 const Nav = () => {
   const { openSidebar } = useState();
@@ -14,9 +15,11 @@ const Nav = () => {
       <NavContainer>
         <div className="nav-center">
           <div className="nav-header">
-            <Link to="/">
-              <img src={logo} alt="Logo" />
-            </Link>
+            <MDBAnimation type="bounce" infinite>
+              <Link to="/">
+                <img className="img-fluid" src={logo} alt="Logo" />
+              </Link>
+            </MDBAnimation>
             <button type="button" className="nav-toggle" onClick={openSidebar}>
               <FaBars />
             </button>

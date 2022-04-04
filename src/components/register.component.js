@@ -46,6 +46,16 @@ const vpassword = (value) => {
   }
 };
 
+const vaddress = (value) => {
+  if (value.length < 35) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The password must be more then 35 characters.
+      </div>
+    );
+  }
+};
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -53,11 +63,13 @@ export default class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeaddress = this.onChangeaddress.bind(this);
 
     this.state = {
       username: "",
       email: "",
       password: "",
+      address: "",
       successful: false,
       message: "",
     };
@@ -81,6 +93,12 @@ export default class Register extends Component {
     });
   }
 
+  onChangeaddress(e) {
+    this.setState({
+      address: e.target.value,
+    });
+  }
+
   handleRegister(e) {
     e.preventDefault();
     // this.props.history.push("/login");
@@ -96,7 +114,8 @@ export default class Register extends Component {
       AuthService.register(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        this.state.address
       ).then(
         (response) => {
           this.setState({
@@ -174,6 +193,18 @@ export default class Register extends Component {
                       value={this.state.password}
                       onChange={this.onChangePassword}
                       validations={[required, vpassword]}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="address">Address</label>
+                    <Input
+                      type="address"
+                      className="form-control"
+                      name="Address"
+                      value={this.state.address}
+                      onChange={this.onChangeaddress}
+                      validations={[required, vaddress]}
                     />
                   </div>
 

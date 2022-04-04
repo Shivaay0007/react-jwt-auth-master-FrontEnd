@@ -43,22 +43,26 @@ const Wrapper = styled.section`
   background: var(--clr-primary-10);
 
   .header h3 {
+    margin-top: 2rem;
     margin-bottom: 2rem;
   }
   p {
+    margin-top: 2rem;
     margin-bottom: 2;
     line-height: 1.8;
     color: var(--clr-primary-3);
   }
   .services-center {
     margin-top: 4rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
     display: grid;
-    gap: 2rem;
+    gap: 1rem;
   }
   .service {
     background: var(--clr-primary-7);
     text-align: center;
-    padding: 1.5rem 1rem;
+    padding: 0.5rem 1rem;
     border-radius: var(--radius);
     p {
       color: var(--clr-primary-2);

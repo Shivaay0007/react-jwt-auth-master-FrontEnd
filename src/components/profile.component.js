@@ -34,6 +34,9 @@ export default class Profile extends Component {
         <p>
           <strong>Email:</strong> {currentUser.email}
         </p>
+        <p>
+          <strong>Address:</strong> {currentUser.address}
+        </p>
         <strong>Authorities:</strong>
         <ul>
           {currentUser.roles &&

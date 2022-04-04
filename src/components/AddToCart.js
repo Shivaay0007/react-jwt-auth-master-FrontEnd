@@ -213,7 +213,7 @@ const AddToCart = ({ pId }) => {
                 <Link to="/checkout" className="btn btn-primary float-right">
                   CheckOut <BiChevronRight className="i-va" />
                 </Link>
-                <Link to="/" className="btn btn-secondary">
+                <Link to="/products" className="btn btn-secondary">
                   <BiChevronLeft className="i-va" /> Continue Shopping
                 </Link>
               </div>

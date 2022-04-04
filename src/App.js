@@ -24,6 +24,7 @@ import BoardAdmin from "./components/board-admin.component";
 import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
 import AddToCart from "./components/AddToCart";
+import Checkout from "./components/Checkout";
 
 class App extends Component {
   constructor(props) {
@@ -219,6 +220,7 @@ class App extends Component {
               <AddToCart Product={"CartProducts"} />
             </Route>
             <Route exact path="/login" component={Login} />
+            <Route exact path="/Checkout" component={Checkout} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/user" component={BoardUser} />
