@@ -27,12 +27,31 @@ const AddToCart = ({ pId }) => {
   });
 
   const [ParemId, setParemId] = useState("");
+  let cartItem = [];
+  let cartItemId = [];
 
   useEffect(() => {
-    setuserCartDataFromLocalStorage(
-      JSON.parse(localStorage.getItem("Cart")) || []
-    );
-  }, [ParemId]);
+    // setuserCartDataFromLocalStorage(
+    //   JSON.parse(localStorage.getItem("Cart")) || []
+    // );
+    const LocalStorageData = JSON.parse(localStorage.getItem("Cart")) || [];
+    // console.log("sd,mvbkjvkeubkjsfb", LocalStorageData);
+
+    LocalStorageData.map((Cart) => {
+      if (cartItemId.indexOf(Cart.id) < 0) {
+        Cart["qty"] = 1;
+        cartItemId.push(Cart.id);
+        cartItemId.push(Cart);
+      } else {
+        const tempIndexOfCurrentItem = cartItemId.indexOf(Cart.id);
+        cartItem[tempIndexOfCurrentItem].qty += 1;
+        cartItem[tempIndexOfCurrentItem].price += Cart.price;
+      }
+    });
+
+    setuserCartDataFromLocalStorage(cartItem);
+    console.log("sd,mvbkjvkeubkjsfb", cartItem);
+  }, []);
 
   const removePurchasedPFromCart = (paramId) => {
     const LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
@@ -168,7 +187,7 @@ const AddToCart = ({ pId }) => {
                               <text
                                 type="text"
                                 className="form-control"
-                                defaultValue="1"
+                                defaultValue={Cart.qty}
                               >
                                 {count}
                               </text>

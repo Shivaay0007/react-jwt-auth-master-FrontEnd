@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -16,7 +16,7 @@ const required = (value) => {
 };
 
 export default class Login extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
@@ -67,7 +67,7 @@ export default class Login extends Component {
 
           this.setState({
             loading: false,
-            message: "error : " + error.message,
+            message: "error : " + error.response.data.message,
           });
         }
       );
@@ -141,7 +141,7 @@ export default class Login extends Component {
                 </div>
               )}
               <CheckButton
-                style={{display: "none"}}
+                style={{ display: "none" }}
                 ref={(c) => {
                   this.checkBtn = c;
                 }}

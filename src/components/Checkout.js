@@ -8,20 +8,24 @@ import {
 import { BsCreditCard2FrontFill } from "react-icons/bs";
 import AuthService from "../services/auth.service";
 import styled from "styled-components";
+import { formatPrice } from "../utils/helpers";
 
 class CheckoutView extends Component {
   constructor(props) {
     super();
     this.state = {
       currentUser: AuthService.getCurrentUser(),
-      //   LocalStorage: JSON.parse(localStorage.getItem("Cart")),
+      LocalStorageforCheckout: JSON.parse(localStorage.getItem("Cart")),
     };
-    // console.log("localstorage", this.LocalStorage);
   }
 
   render() {
     const { currentUser } = this.state;
-    // const { LocalStorage } = this.state;
+    const { LocalStorageforCheckout } = this.state;
+    // console.log("localstorage", LocalStorage);
+
+    let ourTotalPrice = 0;
+
     return (
       <Wrapper>
         <React.Fragment>
@@ -32,21 +36,21 @@ class CheckoutView extends Component {
             <div className="row">
               <div className="col-md-8">
                 <div className="card mb-3">
-                  <div className="card-header">
+                  <div className="card-header bg-info">
                     <FaEnvelopeOpenText className="i-va" size={30} /> Contact
                     Info
                   </div>
                   <div className="card-body">
                     <div className="row g-3">
                       <div className="col-md-6">
-                        <text
+                        <label
                           type="email"
                           className="form-control"
                           placeholder="Email Address"
                           aria-label="Email Address"
                         >
                           {currentUser.email}
-                        </text>
+                        </label>
                       </div>
                       <div className="col-md-6">
                         <input
@@ -61,21 +65,21 @@ class CheckoutView extends Component {
                 </div>
 
                 <div className="card mb-3">
-                  <div className="card-header">
+                  <div className="card-header bg-info">
                     <FaTruckMoving className="i-va" size={30} /> Shipping
                     Infomation
                   </div>
                   <div className="card-body">
                     <div className="row g-3">
                       <div className="col-md-12">
-                        <text
+                        <label
                           type="text"
                           className="form-control address"
                           placeholder="Name"
                           required
                         >
                           {currentUser.username}
-                        </text>
+                        </label>
                       </div>
                       <div className="col-md-6">
                         <label
@@ -127,22 +131,22 @@ class CheckoutView extends Component {
                 </div>
 
                 <div className="card mb-3">
-                  <div className="card-header">
+                  <div className="card-header bg-info">
                     <FaReceipt className="i-va" size={30} /> Billing Infomation
-                    <div className="form-check form-check-inline ml-3">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        defaultValue
-                        id="flexCheckDefault"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="flexCheckDefault"
-                      >
-                        Same as Shipping Infomation
-                      </label>
-                    </div>
+                  </div>
+                  <div className="form-check form-check-inline ml-3">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      defaultValue
+                      id="flexCheckDefault"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckDefault"
+                    >
+                      Same as Shipping Infomation
+                    </label>
                   </div>
                   <div className="card-body">
                     <div className="row g-3">
@@ -215,41 +219,43 @@ class CheckoutView extends Component {
                 <div className="card">
                   <div className="card-header">
                     <FaOpencart className="i-va" size={30} /> Cart
-                    <span className="badge bg-secondary float-right">3</span>
+                    <span className="badge bg-secondary float-right">
+                      Product Count : {LocalStorageforCheckout?.length}
+                    </span>
                   </div>
                   <ul className="list-group list-group-flush">
-                    <li className="list-group-item d-flex justify-content-between lh-sm">
-                      <div>
-                        {/* <h6 className="my-0">{LocalStorage.Cart.name}</h6> */}
-                        <small className="text-muted">Brief description</small>
-                      </div>
-                      <span className="text-muted">$150</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between lh-sm">
-                      <div>
-                        <h6 className="my-0">Second product</h6>
-                        <small className="text-muted">Brief description</small>
-                      </div>
-                      <span className="text-muted">$12</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between lh-sm">
-                      <div>
-                        <h6 className="my-0">Third item</h6>
-                        <small className="text-muted">Brief description</small>
-                      </div>
-                      <span className="text-muted">$50</span>
-                    </li>
+                    {LocalStorageforCheckout.map((Cart) => {
+                      ourTotalPrice = ourTotalPrice + Cart.price;
+
+                      return (
+                        <li className="list-group-item d-flex justify-content-between lh-sm">
+                          <div>
+                            <h6 className="my-0">{Cart?.name}</h6>
+                            <small className="text-muted">
+                              Brief description
+                            </small>
+                          </div>
+                          <span className="text-muted">
+                            {formatPrice(Cart?.price)}
+                          </span>
+                        </li>
+                      );
+                    })}
                     <li className="list-group-item d-flex justify-content-between bg-light">
                       <div className="text-success">
                         <h6 className="my-0">Promo code</h6>
                         <small>EXAMPLECODE</small>
                       </div>
-                      <span className="text-success">−$50</span>
+                      <span className="text-success">-$50</span>
                     </li>
+                    {/* {LocalStorage.map((Cart) => { */}
+
                     <li className="list-group-item d-flex justify-content-between">
                       <span>Total (USD)</span>
-                      <strong>$162</strong>
+                      <strong>{formatPrice(ourTotalPrice)}</strong>
                     </li>
+
+                    {/* })} */}
                   </ul>
                 </div>
               </div>
