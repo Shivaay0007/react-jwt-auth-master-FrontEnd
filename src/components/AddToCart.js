@@ -1,4 +1,4 @@
-import React, { Component, lazy, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsHeartFill, BsFillTrashFill } from "react-icons/bs";
 import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
@@ -27,8 +27,17 @@ const AddToCart = ({ pId }) => {
   });
 
   const [ParemId, setParemId] = useState("");
+  const [CurrentQuantity, setCurrentQuantity] = useState([
+    {
+      id: 0,
+      productQuantity: 0,
+    },
+  ]);
+
   let cartItem = [];
   let cartItemId = [];
+
+  let ourTotalPrice = 0;
 
   useEffect(() => {
     // setuserCartDataFromLocalStorage(
@@ -39,9 +48,11 @@ const AddToCart = ({ pId }) => {
 
     LocalStorageData.map((Cart) => {
       if (cartItemId.indexOf(Cart.id) < 0) {
+        console.log("cart item id is printed", Cart.id);
+
         Cart["qty"] = 1;
         cartItemId.push(Cart.id);
-        cartItemId.push(Cart);
+        cartItem.push(Cart);
       } else {
         const tempIndexOfCurrentItem = cartItemId.indexOf(Cart.id);
         cartItem[tempIndexOfCurrentItem].qty += 1;
@@ -50,8 +61,8 @@ const AddToCart = ({ pId }) => {
     });
 
     setuserCartDataFromLocalStorage(cartItem);
-    console.log("sd,mvbkjvkeubkjsfb", cartItem);
-  }, []);
+    // console.log("sd,mvbkjvkeubkjsfb", cartItem);
+  }, [ParemId]);
 
   const removePurchasedPFromCart = (paramId) => {
     const LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
@@ -63,14 +74,28 @@ const AddToCart = ({ pId }) => {
     LocalStorageCart.splice(index, 1);
 
     localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
-    setParemId(paramId);
+    setParemId(paramId + Math.random());
   };
 
-  const increaseCount = () => {
-    return setCount(count + 1);
+  const removeMultipleItem = (, paramId) => {
+    const whichItemToRemove = [paramId];
+
+    const restCartItem = orgArray.filter(
+      (value) => !whichItemToRemove.includes(value)
+    );
+    localStorage.setItem("Cart", JSON.stringify(restCartItem));
   };
-  const decreaseCount = () => {
-    return setCount(count - 1);
+
+  let LocalStorageCart = [];
+
+  const increaseCount = (singleProductqty) => {
+    // return setCount(count + 1);
+
+    setParemId(singleProductqty.id + Math.random());
+
+    LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
+    LocalStorageCart.push(singleProductqty);
+    localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
   };
 
   //   const LocalStorage = localStorage.getItem("user");
@@ -149,6 +174,8 @@ const AddToCart = ({ pId }) => {
                     </tr>
                   </thead>
                   {userCartDataFromLocalStorage.map((Cart) => {
+                    ourTotalPrice = ourTotalPrice + Cart.price;
+
                     return (
                       <tbody>
                         <tr>
@@ -164,13 +191,14 @@ const AddToCart = ({ pId }) => {
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               <div className="col">
                                 <Link
-                                  to="/product/detail"
+                                  to="/SingleProductPage"
                                   className="text-decoration-none"
                                 >
                                   {Cart.name}
                                 </Link>
                                 <p className="small text-muted">
-                                  Size: XL, Color: blue, Brand: XYZ
+                                  Size: XL, Color: {Cart.colors}, Brand:{" "}
+                                  {Cart.company}
                                 </p>
                               </div>
                             </div>
@@ -180,7 +208,9 @@ const AddToCart = ({ pId }) => {
                               <button
                                 className="btn btn-primary text-white"
                                 type="button"
-                                onClick={decreaseCount}
+                                onClick={() =>
+                                  removePurchasedPFromCart(Cart.id)
+                                }
                               >
                                 <TiMinus />
                               </button>
@@ -189,12 +219,12 @@ const AddToCart = ({ pId }) => {
                                 className="form-control"
                                 defaultValue={Cart.qty}
                               >
-                                {count}
+                                {Cart.qty}
                               </text>
                               <button
                                 className="btn btn-primary text-white"
                                 type="button"
-                                onClick={increaseCount}
+                                onClick={() => increaseCount(Cart)}
                               >
                                 <TiPlus />
                               </button>
@@ -215,9 +245,7 @@ const AddToCart = ({ pId }) => {
                             <button className="btn btn-sm btn-outline-danger">
                               <BsFillTrashFill
                                 className="i-va"
-                                onClick={() =>
-                                  removePurchasedPFromCart(Cart.id)
-                                }
+                                onClick={() => removeMultipleItem(Cart.id)}
                               />
                             </button>
                           </td>
@@ -259,8 +287,8 @@ const AddToCart = ({ pId }) => {
                 </dl>
                 <dl className="row">
                   <dt className="col-6">Total:</dt>
-                  <dd className="col-6 text-right  h5">
-                    <strong>$1,350</strong>
+                  <dd className="col-6 text-right h6">
+                    <strong>{formatPrice(ourTotalPrice)}</strong>
                   </dd>
                 </dl>
                 <hr />

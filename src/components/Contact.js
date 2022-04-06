@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import OurTeamPage from "./OurTeamPage";
 
 // https://formspree.io/
 const Contact = () => {
@@ -26,6 +27,7 @@ const Contact = () => {
           </div>
         </div>
       </Wrapper>
+      <OurTeamPage />
     </div>
   );
 };

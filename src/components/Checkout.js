@@ -9,6 +9,7 @@ import { BsCreditCard2FrontFill } from "react-icons/bs";
 import AuthService from "../services/auth.service";
 import styled from "styled-components";
 import { formatPrice } from "../utils/helpers";
+import { Link } from "react-router-dom";
 
 class CheckoutView extends Component {
   constructor(props) {
@@ -31,6 +32,11 @@ class CheckoutView extends Component {
         <React.Fragment>
           <div className="bg-secondary border-top p-4 text-white mb-3">
             <h1 className="display-6">Checkout</h1>
+          </div>
+          <div>
+            <Link to="/AddToCart" className="btn">
+              back to Cart
+            </Link>
           </div>
           <div className="container mb-3">
             <div className="row">
@@ -219,8 +225,10 @@ class CheckoutView extends Component {
                 <div className="card">
                   <div className="card-header">
                     <FaOpencart className="i-va" size={30} /> Cart
-                    <span className="badge bg-secondary float-right">
-                      Product Count : {LocalStorageforCheckout?.length}
+                    <span className="badge float-right">
+                      <strong>
+                        Product Count : {LocalStorageforCheckout?.length}
+                      </strong>
                     </span>
                   </div>
                   <ul className="list-group list-group-flush">

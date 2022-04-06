@@ -10,7 +10,6 @@ import AuthService from "./services/auth.service";
 
 import AboutPage from "./components/AboutPage";
 import EcommercePage from "./components/EcommercePage";
-import { Products } from "./pages";
 import Contact from "./components/Contact";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
@@ -152,6 +151,7 @@ class App extends Component {
                     <Link to={"/profile"} className="nav-link">
                       {currentUser.username}
                     </Link>
+                    <hr />
                     <Link
                       to={"/login"}
                       className="nav-link"

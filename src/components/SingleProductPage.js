@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AddToCart from "./AddToCart";
 import Axios from "axios";
 import { formatPrice } from "../utils/helpers";
 
