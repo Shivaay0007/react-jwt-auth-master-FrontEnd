@@ -76,15 +76,27 @@ const AddToCart = ({ pId }) => {
     localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
     setParemId(paramId + Math.random());
   };
+  const removePurchasedPItemFromCart = (paramId) => {
+    const LocalStorageItemCart = JSON.parse(localStorage.getItem("Cart")) || [];
 
-  const removeMultipleItem = (, paramId) => {
-    const whichItemToRemove = [paramId];
+    var index = LocalStorageItemCart.map((x) => {
+      return x.id;
+    }).indexOf(paramId);
 
-    const restCartItem = orgArray.filter(
-      (value) => !whichItemToRemove.includes(value)
-    );
-    localStorage.setItem("Cart", JSON.stringify(restCartItem));
+    LocalStorageItemCart.splice(index, 1);
+
+    localStorage.setItem("Cart", JSON.stringify(LocalStorageItemCart));
+    setParemId(paramId);
   };
+  // This function is for  remove entire product from cart
+  // const removeMultipleItem = (paramId) => {
+  //   const whichItemToRemove = [paramId];
+
+  //   const restCartItem = paramId.filter(
+  //     (value) => !whichItemToRemove.includes(value)
+  //   );
+  //   localStorage.setItem("Cart", JSON.stringify(restCartItem));
+  // };
 
   let LocalStorageCart = [];
 
@@ -197,7 +209,7 @@ const AddToCart = ({ pId }) => {
                                   {Cart.name}
                                 </Link>
                                 <p className="small text-muted">
-                                  Size: XL, Color: {Cart.colors}, Brand:{" "}
+                                  Size: XL, <strong>Brand:</strong>
                                   {Cart.company}
                                 </p>
                               </div>
@@ -235,7 +247,8 @@ const AddToCart = ({ pId }) => {
                               {formatPrice(Cart.price)}
                             </var>
                             <small className="d-block text-muted">
-                              $79.00 each
+                              {/* $79.00 each */}
+                              {formatPrice(Cart.price / Cart.qty)}
                             </small>
                           </td>
                           <td className="text-right">
@@ -245,7 +258,9 @@ const AddToCart = ({ pId }) => {
                             <button className="btn btn-sm btn-outline-danger">
                               <BsFillTrashFill
                                 className="i-va"
-                                onClick={() => removeMultipleItem(Cart.id)}
+                                onClick={() =>
+                                  removePurchasedPItemFromCart(Cart.id)
+                                }
                               />
                             </button>
                           </td>
@@ -277,13 +292,13 @@ const AddToCart = ({ pId }) => {
             <div className="card">
               <div className="card-body">
                 <dl className="row border-bottom">
-                  <dt className="col-6">Total price:</dt>
+                  {/* <dt className="col-6">Total price:</dt>
                   <dd className="col-6 text-right">$1,568</dd>
 
                   <dt className="col-6 text-success">Discount:</dt>
                   <dd className="col-6 text-success text-right">-$58</dd>
                   <dt className="col-6 text-success">Coupon: </dt>
-                  <dd className="col-6 text-success text-right">-$68</dd>
+                  <dd className="col-6 text-success text-right">-$68</dd> */}
                 </dl>
                 <dl className="row">
                   <dt className="col-6">Total:</dt>

@@ -20,6 +20,44 @@ class CheckoutView extends Component {
     };
   }
 
+  payment(){
+    this.setState({
+        options = {
+        key: "rzp_test_zIUsPykcjYEZHO",
+        amount: "1",
+        currency: "INR",
+        name: "Dummy Academy",
+        description: "Pay & Checkout this Course, Upgrade your DSA Skill",
+        image: "https://media.geeksforgeeks.org/wp-content/uploads/20210806114908/dummy-200x200.png",
+        order_id: data.order_id,
+        handler: function (response) {
+          console.log("response of payment line 18 index.js ==>> ", response);
+          alert("This step of Payment Succeeded");
+        },
+
+        prefill: {
+          contact: prompt("what is your contact no"),
+          name: prompt("what is your name"),
+          email: prompt("what is your email"),
+        },
+        notes: {
+          description: "Best Course for SDE placements",
+          language: `Available in 4 major Languages JAVA, 
+                     C/C++, Python, Javascript`,
+          access: "This course have Lifetime Access",
+        },
+        theme: {
+          color: "#2300a3",
+        }
+      },
+
+    razorpayObject = new Razorpay(options),
+      // razorpayObject.on("payment.failed", function (response) {
+        // alert("This step of Payment Failed");
+      }),
+    
+  }
+  
   render() {
     const { currentUser } = this.state;
     const { LocalStorageforCheckout } = this.state;
@@ -215,9 +253,13 @@ class CheckoutView extends Component {
                   </div>
                   <div className="card-body"></div>
                   <div className="card-footer border-info">
-                    <button type="button" className="btn btn-block btn-info">
+                    <Link
+                      to="razorpay.js"
+                      type="button"
+                      className="btn btn-block btn-info"
+                    >
                       Pay Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
